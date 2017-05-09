@@ -38,6 +38,7 @@ Of course, there are some differences which will be obvious to the user if they 
 - SQLite
 - PostgreSQL
 - Oracle
+- MSSQL
 
 ## Features ##
 
