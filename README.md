@@ -8,6 +8,7 @@ by
 
 * [@kla](https://github.com/kla) - Kien La
 * [@jpfuentes2](https://github.com/jpfuentes2) - Jacques Fuentes
+* [@jqemprendedorve](https://github.com/jqemprendedorve) - Julio Quintana
 * [And these terrific Contributors](https://github.com/kla/php-activerecord/contributors)
 
 <http://www.phpactiverecord.org/> 
