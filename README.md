@@ -1,8 +1,8 @@
 # PHP ActiveRecord - Version 1.0 #
 
-Pleas refer to https://github.com/jpfuentes2/php-activerecord
+Pleas refer to https://github.com/jqemprendedorve/php-activerecord
 
-[![Build Status](https://travis-ci.org/jpfuentes2/php-activerecord.png?branch=master)](https://travis-ci.org/jpfuentes2/php-activerecord)
+[![Build Status](https://travis-ci.org/jqemprendedorve/php-activerecord.png?branch=master)](https://travis-ci.org/jpfuentes2/php-activerecord)
 
 by 
 
