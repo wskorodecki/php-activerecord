@@ -438,6 +438,8 @@ class Table
 				else
 					$hash[$name] = $this->conn->datetime_to_string($value);
 			}
+			else if (is_bool($value))
+				$hash[$name] = $value ? 'true' : 'false';
 			else
 				$hash[$name] = $value;
 		}
