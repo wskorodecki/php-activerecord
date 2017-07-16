@@ -159,7 +159,7 @@ class Column
 
 		switch ($this->type)
 		{
-			case self::BOOLEAN:	return (bool)$value;
+			case self::BOOLEAN:	return is_string($value) ? $value === 'true' : (bool)$value;
 			case self::STRING:	return (string)$value;
 			case self::INTEGER:	return static::castIntegerSafely($value);
 			case self::DECIMAL:	return (double)$value;
