@@ -1938,4 +1938,15 @@ class Model
 		}
 		return true;
 	}
+
+	/**
+	 * @param bool $isExisting Boolean value to set record "new" status to
+	 *
+	 * @return self
+	 */
+	public function forceExisting($isExisting){
+		$this->__new_record = !$isExisting;
+
+		return $this;
+	}
 }
