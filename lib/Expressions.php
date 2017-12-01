@@ -168,7 +168,7 @@ class Expressions
 
 				return $ret;
 			}
-			return join(',',array_fill(0,$value_count,self::ParameterMarker));
+			return implode(',',array_fill(0,$value_count,self::ParameterMarker));
 		}
 
 		if ($substitute)

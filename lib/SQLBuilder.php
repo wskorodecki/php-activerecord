@@ -198,7 +198,7 @@ class SQLBuilder
 			else
 				$parts[$i] .= ' DESC';
 		}
-		return join(',',$parts);
+		return implode(',',$parts);
 	}
 
 	/**
@@ -346,7 +346,7 @@ class SQLBuilder
 	private function build_insert()
 	{
 		require_once 'Expressions.php';
-		$keys = join(',',$this->quoted_key_names());
+		$keys = implode(',',$this->quoted_key_names());
 
 		if ($this->sequence)
 		{
@@ -391,7 +391,7 @@ class SQLBuilder
 		if (strlen($this->update) > 0)
 			$set = $this->update;
 		else
-			$set = join('=?, ', $this->quoted_key_names()) . '=?';
+			$set = implode('=?, ', $this->quoted_key_names()) . '=?';
 
 		$sql = "UPDATE $this->table SET $set";
 
