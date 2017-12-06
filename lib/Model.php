@@ -1667,7 +1667,7 @@ class Model
 		}
 		$results = count($list);
 
-		$expected = is_array($values) ?  count($values) : 1;
+		$expected = is_array($values) || (is_object($values) && $values instanceof \Countable) ?  count($values) : 1;
 		if ($results != $expected)
 		{
 			$class = get_called_class();
