@@ -238,15 +238,9 @@ class Config extends Singleton
 	 *
 	 * @param object $logger
 	 * @return void
-	 * @throws ConfigException if Logger objecct does not implement public log()
 	 */
 	public function set_logger($logger)
 	{
-		$klass = Reflections::instance()->add($logger)->get($logger);
-
-		if (!$klass->getMethod('log') || !$klass->getMethod('log')->isPublic())
-			throw new ConfigException("Logger object must implement a public log method");
-
 		$this->logger = $logger;
 	}
 
