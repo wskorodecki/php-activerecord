@@ -198,4 +198,18 @@ class Column
 
 		return $this->type;
 	}
+
+	/**
+	 * Function to restore Column from file cache
+	 *
+	 * @param array $array
+	 * @return self
+	 */
+	public static function __set_state($array) {
+		$new = new static;
+		foreach ($array as $key => $val) {
+			$new->$key = $val;
+		}
+		return $new;
+	}
 }
