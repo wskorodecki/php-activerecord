@@ -125,15 +125,18 @@ class Expressions
 	{
 		$sql = $g = "";
 
-		foreach ($hash as $name => $value)
+		foreach ($hash as $_name => $value)
 		{
 			if ($this->connection)
-				$name = $this->connection->quote_name($name);
+				$name = $this->connection->quote_name($_name);
+			else $name = $_name;
 
 			if (is_array($value))
 				$sql .= "$g$name IN(?)";
-			elseif (is_null($value))
-				$sql .= "$g$name IS ?";
+			elseif (is_null($value)){
+				$sql .= "$g$name IS NULL";
+				unset($hash[$_name]);
+			}
 			else
 				$sql .= "$g$name=?";
 
@@ -165,7 +168,7 @@ class Expressions
 
 				return $ret;
 			}
-			return join(',',array_fill(0,$value_count,self::ParameterMarker));
+			return implode(',',array_fill(0,$value_count,self::ParameterMarker));
 		}
 
 		if ($substitute)

@@ -1581,7 +1581,7 @@ class Model
 
 			 	case 'last':
 					if (!array_key_exists('order',$options))
-						$options['order'] = join(' DESC, ',static::table()->pk) . ' DESC';
+						$options['order'] = implode(' DESC, ',static::table()->pk) . ' DESC';
 					else
 						$options['order'] = SQLBuilder::reverse_order($options['order']);
 
@@ -1667,11 +1667,12 @@ class Model
 		}
 		$results = count($list);
 
-		if ($results != ($expected = count($values)))
+		$expected = is_array($values) || (is_object($values) && $values instanceof \Countable) ?  count($values) : 1;
+		if ($results != $expected)
 		{
 			$class = get_called_class();
 			if (is_array($values))
-				$values = join(',',$values);
+				$values = implode(',',$values);
 
 			if ($expected == 1)
 			{
@@ -1728,7 +1729,7 @@ class Model
 			$diff = array_diff($keys,self::$VALID_OPTIONS);
 
 			if (!empty($diff) && $throw)
-				throw new ActiveRecordException("Unknown key(s): " . join(', ',$diff));
+				throw new ActiveRecordException("Unknown key(s): " . implode(', ',$diff));
 
 			$intersect = array_intersect($keys,self::$VALID_OPTIONS);
 
@@ -1937,5 +1938,16 @@ class Model
 			throw $e;
 		}
 		return true;
+	}
+
+	/**
+	 * @param bool $isExisting Boolean value to set record "new" status to
+	 *
+	 * @return self
+	 */
+	public function forceExisting($isExisting){
+		$this->__new_record = !$isExisting;
+
+		return $this;
 	}
 }

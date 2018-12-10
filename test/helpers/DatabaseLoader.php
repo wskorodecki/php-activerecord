@@ -105,13 +105,13 @@ class DatabaseLoader
 
 		if (!empty($fields))
 		{
-			$markers = join(',',array_fill(0,count($fields),'?'));
+			$markers = implode(',',array_fill(0,count($fields),'?'));
 			$table = $this->quote_name($table);
 
 			foreach ($fields as &$name)
 				$name = $this->quote_name(trim($name));
 
-			$fields = join(',',$fields);
+			$fields = implode(',',$fields);
 
 			while (($values = fgetcsv($fp)))
 				$this->db->query("INSERT INTO $table($fields) VALUES($markers)",$values);

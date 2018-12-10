@@ -26,7 +26,7 @@ $coal    = $tito->create_orders(array('item_name' => 'Lump of Coal', 'price' => 
 $freebie = $tito->create_orders(array('item_name' => 'Freebie', 'price' => -100.99));
 
 if (count($freebie->errors) > 0)
-	echo "[FAILED] saving order $freebie->item_name: " . join(', ',$freebie->errors->full_messages()) . "\n\n";
+	echo "[FAILED] saving order $freebie->item_name: " . implode(', ',$freebie->errors->full_messages()) . "\n\n";
 
 // payments
 $pokemon->create_payments(array('amount' => 1.99, 'person_id' => $tito->id));
@@ -36,7 +36,7 @@ $pokemon->create_payments(array('amount' => 2.50, 'person_id' => $jax->id));
 // reload since we don't want the freebie to show up (because it failed validation)
 $tito->reload();
 
-echo "$tito->name has " . count($tito->orders) . " orders for: " . join(', ',ActiveRecord\collect($tito->orders,'item_name')) . "\n\n";
+echo "$tito->name has " . count($tito->orders) . " orders for: " . implode(', ',ActiveRecord\collect($tito->orders,'item_name')) . "\n\n";
 
 // get all orders placed by Tito
 foreach (Order::find_all_by_person_id($tito->id) as $order)

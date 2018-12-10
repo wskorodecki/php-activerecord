@@ -323,7 +323,7 @@ class Validations
 
 			$not_a_number_message = (isset($options['message']) ? $options['message'] : Errors::$DEFAULT_ERROR_MESSAGES['not_a_number']);
 
-			if (true === $options['only_integer'] && !is_integer($var))
+			if (true === $options['only_integer'] && !is_int($var))
 			{
 				if (!preg_match('/\A[+-]?\d+\Z/', (string)($var)))
 				{
@@ -473,7 +473,7 @@ class Validations
 			$range_options = array_intersect(array_keys(self::$ALL_RANGE_OPTIONS), array_keys($attr));
 			sort($range_options);
 
-			switch (sizeof($range_options))
+			switch (count($range_options))
 			{
 				case 0:
 					throw new  ValidationsArgumentError('Range unspecified.  Specify the [within], [maximum], or [is] option.');
@@ -576,7 +576,7 @@ class Validations
 
 			if (is_array($options[0]))
 			{
-				$add_record = join("_and_", $options[0]);
+				$add_record = implode("_and_", $options[0]);
 				$fields = $options[0];
 			}
 			else
