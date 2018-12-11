@@ -1,11 +1,10 @@
-# PHP ActiveRecord - Version 1.0 #
-
-[![Build Status](https://travis-ci.org/jpfuentes2/php-activerecord.png?branch=master)](https://travis-ci.org/jpfuentes2/php-activerecord)
+# PHP ActiveRecord - Version 1.3 #
 
 by 
 
 * [@kla](https://github.com/kla) - Kien La
 * [@jpfuentes2](https://github.com/jpfuentes2) - Jacques Fuentes
+* [@jqemprendedorve](https://github.com/jqemprendedorve) - Julio Quintana
 * [And these terrific Contributors](https://github.com/kla/php-activerecord/contributors)
 
 <http://www.phpactiverecord.org/> 
@@ -36,6 +35,7 @@ Of course, there are some differences which will be obvious to the user if they 
 - SQLite
 - PostgreSQL
 - Oracle
+- MSSQL
 
 ## Features ##
 
