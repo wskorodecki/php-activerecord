@@ -938,7 +938,7 @@ class Model
 	 * <li><b>order:</b> A SQL fragment for ordering such as: 'name asc', 'id desc, name asc' (MySQL & Sqlite only)</li>
 	 * </ul>
 	 *
-	 * @params array $options
+	 * @param array $options
 	 * return integer Number of rows affected
 	 */
 	public static function delete_all($options=array())
@@ -991,7 +991,7 @@ class Model
 	 * <li><b>order:</b> A SQL fragment for ordering such as: 'name asc', 'id desc, name asc' (MySQL & Sqlite only)</li>
 	 * </ul>
 	 *
-	 * @params array $options
+	 * @param array $options
 	 * return integer Number of rows affected
 	 */
 	public static function update_all($options=array())
