@@ -55,7 +55,7 @@ ActiveRecord\Config::initialize(function($cfg)
 			$GLOBALS['slow_tests'] = true;
 	}
 
-	if (class_exists('Log_file')) // PEAR Log installed
+	if (false) // PEAR Log installed
 	{
 		$logger = new Log_file(dirname(__FILE__) . '/../log/query.log','ident',array('mode' => 0664, 'timeFormat' =>  '%Y-%m-%d %H:%M:%S'));
 	

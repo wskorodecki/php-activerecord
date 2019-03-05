@@ -128,14 +128,4 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 		});
 	}
 
-	public function test_logger_object_must_implement_log_method()
-	{
-		try {
-			$this->config->set_logger(new TestLogger);
-			$this->fail();
-		} catch (ConfigException $e) {
-			$this->assert_equals($e->getMessage(), "Logger object must implement a public log method");
-		}
-	}
 }
-?>

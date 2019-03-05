@@ -236,10 +236,10 @@ class Config extends Singleton
 	/**
 	 * Sets the logger object for future SQL logging
 	 *
-	 * @param object $logger
+	 * @param ActiveRecordLogger $logger
 	 * @return void
 	 */
-	public function set_logger($logger)
+	public function set_logger(ActiveRecordLogger $logger)
 	{
 		$this->logger = $logger;
 	}

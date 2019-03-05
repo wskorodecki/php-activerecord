@@ -316,8 +316,7 @@ abstract class Connection
 	 */
 	public function query($sql, &$values=array())
 	{
-		if ($this->logging)
-		{
+		if ($this->logging) {
 			$this->logger->log($sql, $values);
 		}
 
@@ -333,8 +332,12 @@ abstract class Connection
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 
 		try {
+			$time_start = microtime(true);
 			if (!$sth->execute($values))
 				throw new DatabaseException($this);
+			if ($this->logging) {
+				$this->logger->setTime(microtime(true) - $time_start);
+			}
 		} catch (PDOException $e) {
 			throw new DatabaseException($e);
 		}
