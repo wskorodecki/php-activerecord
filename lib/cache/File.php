@@ -12,7 +12,7 @@ class File {
 			$folder = $options['host'] . ':/' . $folder;
 		}
 
-		if (!is_dir($folder)) {
+		if (!is_dir($folder) && !mkdir($folder, 0777, true)) {
 			throw new \Exception(sprintf("Cache folder %s does not exists!", $folder));
 		} else {
 			$this->cache_folder = $folder;
