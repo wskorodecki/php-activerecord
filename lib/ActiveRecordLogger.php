@@ -7,7 +7,7 @@ class ActiveRecordLogger {
 	/**
 	 * @var array
 	 */
-	private $queries = [];
+	protected $queries = [];
 
 	/**
 	 * @param string $sql
