@@ -317,7 +317,12 @@ abstract class Connection
 	public function query($sql, &$values=array())
 	{
 		if ($this->logging) {
-			$this->logger->log($sql, $values);
+            // Note: here - the array MUST be a copy of the original array to avoid breaking connections and queries.
+
+            $valuesToLog = $values;
+            $valuesToLog['trace'] = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+
+			$this->logger->log($sql, $valuesToLog);
 		}
 
 		$this->last_query = $sql;
