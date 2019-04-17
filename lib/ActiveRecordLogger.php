@@ -18,7 +18,7 @@ class ActiveRecordLogger {
 	 * @param string $sql
 	 * @param array $values
 	 */
-	public function log($sql, array $values) {
+	public function log($sql, array $values = []) {
 		$this->queries[] = [
 			'sql' => $sql,
 			'params' => $values,
