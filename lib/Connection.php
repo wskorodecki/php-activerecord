@@ -317,12 +317,7 @@ abstract class Connection
 	public function query($sql, &$values=array())
 	{
 		if ($this->logging) {
-            // Note: here - the array MUST be a copy of the original array to avoid breaking connections and queries.
-
-            $valuesToLog = $values;
-            $valuesToLog['trace'] = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
-
-			$this->logger->log($sql, $valuesToLog);
+			$this->logger->log($sql, $values);
 		}
 
 		$this->last_query = $sql;
@@ -341,7 +336,7 @@ abstract class Connection
 			if (!$sth->execute($values))
 				throw new DatabaseException($this);
 			if ($this->logging) {
-				$this->logger->setTime(microtime(true) - $time_start);
+				$this->logger->setLastQueryTime(microtime(true) - $time_start);
 			}
 		} catch (PDOException $e) {
 			throw new DatabaseException($e);
@@ -398,6 +393,9 @@ abstract class Connection
 	 */
 	public function transaction()
 	{
+		if ($this->logging) {
+			$this->logger->log('START TRANSACTION');
+		}
 		if (!$this->connection->beginTransaction())
 			throw new DatabaseException($this);
 	}
@@ -407,6 +405,9 @@ abstract class Connection
 	 */
 	public function commit()
 	{
+		if ($this->logging) {
+			$this->logger->log('COMMIT');
+		}
 		if (!$this->connection->commit())
 			throw new DatabaseException($this);
 	}
@@ -416,6 +417,9 @@ abstract class Connection
 	 */
 	public function rollback()
 	{
+		if ($this->logging) {
+			$this->logger->log('ROLLBACK');
+		}
 		if (!$this->connection->rollback())
 			throw new DatabaseException($this);
 	}

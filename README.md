@@ -1,4 +1,4 @@
-# PHP ActiveRecord - Version 2.3.0 #
+# PHP ActiveRecord - Version 2.4.0 #
 
 by 
 
