@@ -13,6 +13,13 @@ class ActiveRecordLogger {
 	 * @var boolean
 	 */
 	protected $backtrace = false;
+	
+	/**
+	 * @param boolean $backtrace
+	 */
+	public function __construct($backtrace = false) {
+		$this->backtrace = $backtrace;
+	}
 
 	/**
 	 * @param string $sql
@@ -25,7 +32,7 @@ class ActiveRecordLogger {
 			'time' => 0,
 			'trace' => $this->backtrace ? \call_user_func(function(){
 				$backtrace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
-				return \array_splice($backtrace, 2);
+				return \array_splice($backtrace, 3);
 			}) : null
 		];
 	}
