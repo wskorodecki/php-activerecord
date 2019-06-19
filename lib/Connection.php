@@ -98,6 +98,7 @@ abstract class Connection
 	 *   If null it will use the default connection specified by ActiveRecord\Config->set_default_connection
 	 * @return Connection
 	 * @see parse_connection_url
+	 * @throws DatabaseException
 	 */
 	public static function instance($connection_string_or_connection_name=null)
 	{
@@ -116,19 +117,50 @@ abstract class Connection
 			throw new DatabaseException("Empty connection string");
 
 		$info = static::parse_connection_url($connection_string);
-		$fqclass = static::load_adapter_class($info->protocol);
+		$fqn = static::load_adapter_class($info->protocol);
+		$isLoggingEnabled = $config->get_logging();
 
-		try {
-			$connection = new $fqclass($info);
-			$connection->protocol = $info->protocol;
-			$connection->logging = $config->get_logging();
-			$connection->logger = $connection->logging ? $config->get_logger() : null;
+		/** @var ActiveRecordLogger|null $logger */
+		$logger = $isLoggingEnabled ? $config->get_logger() : null;
 
-			if (isset($info->charset))
-				$connection->set_encoding($info->charset);
-		} catch (PDOException $e) {
-			throw new DatabaseException($e);
+		if ($logger) {
+			$start = \microtime(true);
+			$e = null;
+
+			try {
+				/** @var Connection $connection */
+				$connection = new $fqn($info);
+				$end = \microtime(true);
+			} catch (PDOException $e) {
+				// The failed attempt's time should be calculated too.
+				$end = \microtime(true);
+			}
+
+			$logger::addConnectionProfile($info, $end - $start);
+
+			if ($e) {
+				throw new DatabaseException($e);
+			}
+		} else {
+			try {
+				$connection = new $fqn($info);
+			} catch (PDOException $e) {
+				throw new DatabaseException($e);
+			}
 		}
+
+		$connection->protocol = $info->protocol;
+		$connection->logging = $isLoggingEnabled;
+		$connection->logger = $logger;
+
+		if (isset($info->charset)) {
+			try {
+				$connection->set_encoding($info->charset);
+			} catch (PDOException $e) {
+				throw new DatabaseException($e);
+			}
+		}
+
 		return $connection;
 	}
 
