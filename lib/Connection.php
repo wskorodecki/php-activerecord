@@ -136,7 +136,7 @@ abstract class Connection
 				$end = \microtime(true);
 			}
 
-			$logger::addConnectionProfile($info, $end - $start);
+			$logger::addConnectionProfile(\spl_object_hash($connection), $info, $end - $start);
 
 			if ($e) {
 				throw new DatabaseException($e);
@@ -349,7 +349,7 @@ abstract class Connection
 	public function query($sql, &$values=array())
 	{
 		if ($this->logging) {
-			$this->logger->log($sql, $values);
+			$this->logger->log($sql, $values, \spl_object_hash($this->connection));
 		}
 
 		$this->last_query = $sql;
@@ -426,7 +426,7 @@ abstract class Connection
 	public function transaction()
 	{
 		if ($this->logging) {
-			$this->logger->log('START TRANSACTION');
+			$this->logger->log('START TRANSACTION', array(), \spl_object_hash($this->connection));
 		}
 		if (!$this->connection->beginTransaction())
 			throw new DatabaseException($this);
@@ -438,7 +438,7 @@ abstract class Connection
 	public function commit()
 	{
 		if ($this->logging) {
-			$this->logger->log('COMMIT');
+			$this->logger->log('COMMIT', array(), \spl_object_hash($this->connection));
 		}
 		if (!$this->connection->commit())
 			throw new DatabaseException($this);
@@ -450,7 +450,7 @@ abstract class Connection
 	public function rollback()
 	{
 		if ($this->logging) {
-			$this->logger->log('ROLLBACK');
+			$this->logger->log('ROLLBACK', array(), \spl_object_hash($this->connection));
 		}
 		if (!$this->connection->rollback())
 			throw new DatabaseException($this);

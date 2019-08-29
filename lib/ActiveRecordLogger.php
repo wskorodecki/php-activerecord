@@ -31,10 +31,11 @@ class ActiveRecordLogger
 	}
 
 	/**
+	 * @param string $id
 	 * @param \stdClass $info
 	 * @param float $time
 	 */
-	public static function addConnectionProfile(\stdClass $info, $time)
+	public static function addConnectionProfile($id, \stdClass $info, $time)
 	{
 		// Create DSN using the specified info but skip the password for security reasons.
 		// Example: mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8
@@ -50,7 +51,10 @@ class ActiveRecordLogger
 			!empty($info->charset) ? '?charset=' . $info->charset : ''
 		);
 
-		self::$connections[$dsn] = $time;
+		self::$connections[$dsn] = array(
+			'id' => $id,
+			't' => $time,
+		);
 	}
 
 	/**
@@ -64,9 +68,11 @@ class ActiveRecordLogger
 	/**
 	 * @param string $sql
 	 * @param array $values
+	 * @param string|null $connectionId
 	 */
-	public function log($sql, array $values = array()) {
+	public function log($sql, array $values = array(), $connectionId = null) {
 		$this->queries[] = array(
+			'connectionId' => $connectionId,
 			'sql' => $sql,
 			'params' => $values,
 			'time' => 0,
